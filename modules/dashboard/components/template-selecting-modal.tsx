@@ -424,6 +424,8 @@ const TemplateSelectionModal = ({
                 />
               </div>
 
+
+
               <div className="p-4 border border-blue-200 dark:border-blue-800 rounded-lg shadow-[0_0_0_1px_#3b82f6,0_8px_20px_rgba(59,130,246,0.15)]">
                 <h3 className="font-medium mb-2">Selected Template Features</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
