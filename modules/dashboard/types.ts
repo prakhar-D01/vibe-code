@@ -1,8 +1,8 @@
 export interface User {
   id: string;
-  name: string | null;
+  name: string;
   email: string;
-  image: string | null;
+  image: string;
   role: string;
   createdAt: Date;
   updatedAt: Date;
@@ -11,7 +11,7 @@ export interface User {
 export interface Project {
   id: string;
   title: string;
-  description: string | null;
+  description: string;
   template: string;
   createdAt: Date;
   updatedAt: Date;

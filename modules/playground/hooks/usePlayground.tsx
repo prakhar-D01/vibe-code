@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 
 import type { TemplateFolder } from "../lib/path-to-json";
-import { getPlaygroundById, SaveUpdatedCode } from "../actions/index";
+import { getPlaygroundById, SaveUpdatedCode } from "../actions";
 
 interface PlaygroundData {
   id: string;
@@ -38,15 +38,17 @@ export const usePlayground = (id: string): UsePlaygroundReturn => {
 
       //   @ts-ignore
       setPlaygroundData(data);
-      const rawContent = data?.templateFile?.content;
+      const rawContent = data?.templateFiles?.[0]?.content;
 
-      if (rawContent) {
-        setTemplateData(rawContent as unknown as TemplateFolder);
-        toast.success("Playground loaded successfully");
+      if (typeof rawContent === "string") {
+        const parsedContent = JSON.parse(rawContent);
+        setTemplateData(parsedContent);
+        toast.success("playground loaded successfully");
         return;
       }
 
       //   load template from api if not in saved content
+
       const res = await fetch(`/api/template/${id}`);
 
       if (!res.ok) throw new Error(`Failed to load template: ${res.status}`);
@@ -67,8 +69,7 @@ export const usePlayground = (id: string): UsePlaygroundReturn => {
         );
       }
       toast.success("Template loaded successfully");
-    } 
-    catch (error) {
+    } catch (error) {
       console.error("Error loading playground:", error);
       setError("Failed to load playground data");
       toast.error("Failed to load playground data");

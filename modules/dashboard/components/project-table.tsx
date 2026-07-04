@@ -118,7 +118,7 @@ export default function ProjectTable({
   };
 
   const handleMarkasFavorite = async (project: Project) => {
-    
+    //    Write your logic here
   };
 
   const handleDeleteProject = async () => {
@@ -179,7 +179,7 @@ export default function ProjectTable({
                   <div className="flex flex-col">
                     <Link
                       href={`/playground/${project.id}`}
-                      className="hover:text-blue-600 dark:hover:text-blue-400 hover:underline transition-colors"
+                      className="hover:underline"
                     >
                       <span className="font-semibold">{project.title}</span>
                     </Link>
@@ -191,7 +191,7 @@ export default function ProjectTable({
                 <TableCell>
                   <Badge
                     variant="outline"
-                    className="bg-blue-50 text-blue-700 border-blue-300 dark:bg-blue-950/30 dark:text-blue-300 dark:border-blue-700"
+                    className="bg-blue-800/10 text-blue-600 border-blue-500/30 hover:bg-blue-500/20"
                   >
                     {project.template}
                   </Badge>
@@ -206,7 +206,7 @@ export default function ProjectTable({
                     <div className="w-8 h-8 rounded-full overflow-hidden">
                       <Image
                         src={project.user.image || "/placeholder.svg"}
-                        alt={project.user.name || "User"}
+                        alt={project.user.name ?? ""}
                         width={32}
                         height={32}
                         className="object-cover"
@@ -285,6 +285,7 @@ export default function ProjectTable({
         </Table>
       </div>
 
+      {/* Edit Project Dialog */}
       <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
         <DialogContent className="sm:max-w-106.25">
           <DialogHeader>
@@ -333,7 +334,6 @@ export default function ProjectTable({
             </Button>
             <Button
               type="button"
-              variant="brand"
               onClick={handleUpdateProject}
               disabled={isLoading || !editData.title.trim()}
             >

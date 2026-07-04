@@ -12,8 +12,7 @@ function validateJsonStructure(data: unknown): boolean {
   try {
     JSON.parse(JSON.stringify(data)); // Ensures it's serializable
     return true;
-  } 
-  catch (error) {
+  } catch (error) {
     console.error("Invalid JSON structure:", error);
     return false;
   }
@@ -59,19 +58,13 @@ export async function GET(
       );
     }
 
-    try {
-      await fs.unlink(outputFile);
-    } 
-    catch (error) {
-      console.warn("Couldn't delete temp file", error);
-    }
+    await fs.unlink(outputFile);
 
     return Response.json(
       { success: true, templateJson: result },
       { status: 200 },
     );
-  } 
-  catch (error) {
+  } catch (error) {
     console.error("Error generating template JSON:", error);
     return Response.json(
       { error: "Failed to generate template" },

@@ -4,14 +4,13 @@ import { db } from "@/lib/db";
 import { TemplateFolder } from "../lib/path-to-json";
 import { currentUser } from "@/modules/auth/actions";
 
-
 export const getPlaygroundById = async (id: string) => {
   try {
     const playground = await db.playground.findUnique({
       where: { id },
       select: {
         title: true,
-        templateFile: {
+        templateFiles: {
           select: {
             content: true,
           },
@@ -23,7 +22,6 @@ export const getPlaygroundById = async (id: string) => {
     console.log(error);
   }
 };
-
 
 export const SaveUpdatedCode = async (
   playgroundId: string,
@@ -38,11 +36,11 @@ export const SaveUpdatedCode = async (
         playgroundId,
       },
       update: {
-        content: data as any,
+        content: JSON.stringify(data),
       },
       create: {
         playgroundId,
-        content: data as any,
+        content: JSON.stringify(data),
       },
     });
 

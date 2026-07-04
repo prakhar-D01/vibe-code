@@ -51,6 +51,10 @@ interface ScanOptions {
 
 /**
  * Scans a template directory and returns a structured JSON representation
+ *
+ * @param templatePath - Path to the template directory
+ * @param options - Scanning options to customize behavior
+ * @returns Promise resolving to the template structure as JSON
  */
 export async function scanTemplateDirectory(
   templatePath: string,
@@ -135,6 +139,11 @@ export async function scanTemplateDirectory(
 
 /**
  * Process a directory and its contents recursively
+ *
+ * @param folderName - Name of the current folder
+ * @param folderPath - Path to the current folder
+ * @param options - Scanning options
+ * @returns Promise resolving to a TemplateFolder object
  */
 async function processDirectory(
   folderName: string,
@@ -226,6 +235,11 @@ async function processDirectory(
 
 /**
  * Saves the template structure to a JSON file
+ *
+ * @param templatePath - Path to the template directory
+ * @param outputPath - Path where the JSON file should be saved
+ * @param options - Scanning options
+ * @returns Promise resolving when the file has been written
  */
 export async function saveTemplateStructureToJson(
   templatePath: string,
@@ -269,3 +283,25 @@ export async function readTemplateStructureFromJson(
     );
   }
 }
+
+/**
+ * Example usage:
+ *
+ * // Basic usage with default options
+ * const templateStructure = await scanTemplateDirectory('./templates/react-app');
+ *
+ * // With custom options
+ * const customOptions = {
+ *   ignoreFiles: ['README.md', 'CHANGELOG.md'],
+ *   ignoreFolders: ['docs', 'examples'],
+ *   maxFileSize: 500 * 1024 // 500KB
+ * };
+ * const templateStructure = await scanTemplateDirectory('./templates/react-app', customOptions);
+ *
+ * // Saving directly to a JSON file with custom options
+ * await saveTemplateStructureToJson(
+ *   './templates/react-app',
+ *   './output/react-app-template.json',
+ *   customOptions
+ * );
+ */
