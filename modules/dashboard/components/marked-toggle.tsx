@@ -52,12 +52,12 @@ export const MarkedToggleButton = forwardRef<
     <Button
       ref={ref}
       variant="ghost"
-      className={`flex items-center justify-start w-full px-2 py-1.5 text-sm rounded-md cursor-pointer  transition-colors hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950/30 dark:hover:text-blue-400 ${className}`}
+      className={`flex items-center justify-start w-full px-2 py-1.5 text-sm rounded-md cursor-pointer ${className}`}
       onClick={handleToggle}
       {...props}
     >
       {isMarked ? (
-        <StarIcon size={16} className="text-blue-500 dark:text-blue-400 mr-2" />
+        <StarIcon size={16} className="text-blue-500 mr-2" />
       ) : (
         <StarOffIcon size={16} className="text-gray-500 mr-2" />
       )}

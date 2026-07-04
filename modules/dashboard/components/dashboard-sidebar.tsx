@@ -15,12 +15,11 @@ import {
   Plus,
   Settings,
   Star,
-  Terminal,
   Zap,
   Database,
   FlameIcon,
 } from "lucide-react";
-
+import { Button } from "@/components/ui/button";
 import {
   Sidebar,
   SidebarContent,
@@ -37,7 +36,7 @@ import {
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 
-
+// Define the interface for a single playground item, icon is now a string
 interface PlaygroundData {
   id: string;
   name: string;
@@ -45,14 +44,15 @@ interface PlaygroundData {
   starred: boolean;
 }
 
+// Map icon names (strings) to their corresponding LucideIcon components
 const lucideIconMap: Record<string, LucideIcon> = {
   Zap: Zap,
   Lightbulb: Lightbulb,
   Database: Database,
   Compass: Compass,
   FlameIcon: FlameIcon,
-  Terminal: Terminal,
   Code2: Code2, // Include the default icon
+  // Add any other icons you might use dynamically
 };
 
 export function DashboardSidebar({
@@ -164,7 +164,7 @@ export function DashboardSidebar({
                       <SidebarMenuItem key={playground.id}>
                         <SidebarMenuButton
                           asChild
-                          isActive={pathname === `playground/${playground.id}`}
+                          isActive={pathname === `/playground/${playground.id}`}
                           tooltip={playground.name}
                         >
                           <Link href={`/playground/${playground.id}`}>

@@ -1,20 +1,24 @@
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+
 import authConfig from "./auth.config";
 import { db } from "./lib/db";
-import { getUserById, getAccountByUserId } from "./modules/auth/actions/index";
+import { getAccountByUserId, getUserById } from "./modules/auth/actions";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
-  session: {
-    strategy: "jwt",
-  },
+export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
-    async signIn({ user, account }) {
-      if (!user || !account || !user.email) return false;
+    /**
+     * Handle user creation and account linking after a successful sign-in
+     */
+    async signIn({ user, account, profile }) {
+      if (!user || !account) return false;
 
+      // Check if the user already exists
       const existingUser = await db.user.findUnique({
-        where: { email: user.email },
+        where: { email: user.email! },
       });
+
+      // If user does not exist, create a new one
       if (!existingUser) {
         const newUser = await db.user.create({
           data: {
@@ -39,7 +43,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             },
           },
         });
-        if (!newUser) return false;
+
+        if (!newUser) return false; // Return false if user creation fails
       } else {
         // Link the account if user exists
         const existingAccount = await db.account.findUnique({
@@ -71,9 +76,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           });
         }
       }
+
       return true;
     },
-    async jwt({ token }) {
+
+    async jwt({ token, user, account }) {
       if (!token.sub) return token;
       const existingUser = await getUserById(token.sub);
 
@@ -87,20 +94,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       return token;
     },
+
     async session({ session, token }) {
       // Attach the user ID from the token to the session
       if (token.sub && session.user) {
         session.user.id = token.sub;
       }
 
-      if (token.role && session.user) {
+      if (token.sub && session.user) {
         session.user.role = token.role;
       }
 
       return session;
     },
   },
+
   secret: process.env.AUTH_SECRET,
   adapter: PrismaAdapter(db),
+  session: { strategy: "jwt" },
   ...authConfig,
 });

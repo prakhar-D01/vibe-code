@@ -64,8 +64,7 @@ export const getAllPlaygroundForUser = async () => {
     });
 
     return playground;
-  } 
-  catch (error) {
+  } catch (error) {
     console.log(error);
   }
 };
@@ -86,11 +85,6 @@ export const createPlayground = async (data: {
         description: description,
         template: template,
         userId: user?.id!,
-        templateFile: {
-          create: {
-            content: {},
-          },
-        },
       },
     });
 
@@ -134,30 +128,25 @@ export const duplicateProjectById = async (id: string) => {
   try {
     const originalPlayground = await db.playground.findUnique({
       where: { id },
-      include: {
-        templateFile: true,
-      },
+      // todo: add tempalte files
     });
     if (!originalPlayground) {
       throw new Error("Original playground not found");
     }
 
-    await db.playground.create({
+    const duplicatedPlayground = await db.playground.create({
       data: {
         title: `${originalPlayground.title} (Copy)`,
         description: originalPlayground.description,
         template: originalPlayground.template,
         userId: originalPlayground.userId,
 
-        templateFile: {
-          create: {
-            content: originalPlayground.templateFile?.content ?? {},
-          },
-        },
+        // todo: add template files
       },
     });
 
     revalidatePath("/dashboard");
+    return duplicatedPlayground;
   } catch (error) {
     console.error("Error duplicating project:", error);
   }

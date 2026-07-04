@@ -235,8 +235,8 @@ const TemplateSelectionModal = ({
         {step === "select" ? (
           <>
             <DialogHeader>
-              <DialogTitle className="text-2xl font-boldtext-blue-600 dark:text-blue-400 flex items-center gap-2">
-                <Plus size={24} className="text-blue-600 dark:text-blue-400" />
+              <DialogTitle className="text-2xl font-bold text-blue-600 flex items-center gap-2">
+                <Plus size={24} className="text-blue-600" />
                 Select a Template
               </DialogTitle>
               <DialogDescription>
@@ -285,8 +285,8 @@ const TemplateSelectionModal = ({
                         className={`relative flex p-6 border rounded-lg cursor-pointer transition-all duration-300 hover:scale-[1.02]
                           ${
                             selectedTemplate === template.id
-                              ? "border-blue-500 shadow-[0_0_0_1px_#3b82f6,0_8px_20px_rgba(59,130,246,0.18)]"
-                              : "hover:border-blue-400 shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.12)]"
+                              ? "border-blue-500  shadow-[0_0_0_1px_#2563EB,0_10px_24px_rgba(37,99,235,0.20)]"
+                              : "hover:border-blue-500 shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)]"
                           }
                           
                           `}
@@ -404,7 +404,7 @@ const TemplateSelectionModal = ({
         ) : (
           <>
             <DialogHeader>
-              <DialogTitle className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+              <DialogTitle className="text-2xl font-bold text-blue-600">
                 Configure Your Project
               </DialogTitle>
               <DialogDescription>
@@ -424,19 +424,14 @@ const TemplateSelectionModal = ({
                 />
               </div>
 
-
-
-              <div className="p-4 border border-blue-200 dark:border-blue-800 rounded-lg shadow-[0_0_0_1px_#3b82f6,0_8px_20px_rgba(59,130,246,0.15)]">
+              <div className="p-4 shadow-[0_0_0_1px_#2563EB,0_10px_24px_rgba(37,99,235,0.20)]  rounded-lg border">
                 <h3 className="font-medium mb-2">Selected Template Features</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {templates
                     .find((t) => t.id === selectedTemplate)
                     ?.features.map((feature) => (
                       <div key={feature} className="flex items-center gap-2">
-                        <Zap
-                          size={14}
-                          className="text-blue-600 dark:text-blue-400"
-                        />
+                        <Zap size={14} className="text-blue-600" />
                         <span className="text-sm">{feature}</span>
                       </div>
                     ))}
