@@ -139,8 +139,11 @@ export const PlaygroundEditor = ({
             ],
           };
         },
-        freeInlineCompletions: (completions: any) => {
-          console.log("freeInlineCompletions called");
+        freeInlineCompletions(completions: any) {
+          console.log("freeInlineCompletions");
+        },
+        disposeInlineCompletions: (completions: any) => {
+          console.log("disposeInlineCompletions called");
         },
       };
     },
