@@ -7,6 +7,7 @@ import { templatePaths } from "@/lib/template";
 import path from "path";
 import fs from "fs/promises";
 import { NextRequest } from "next/server";
+import os from "os";
 
 function validateJsonStructure(data: unknown): boolean {
   try {
@@ -45,7 +46,10 @@ export async function GET(
 
   try {
     const inputPath = path.join(process.cwd(), templatePath);
-    const outputFile = path.join(process.cwd(), `output/${templateKey}.json`);
+    const outputFile = path.join(
+      os.tmpdir(),
+      `${templateKey}-${Date.now()}.json`,
+    );
 
     await saveTemplateStructureToJson(inputPath, outputFile);
     const result = await readTemplateStructureFromJson(outputFile);
