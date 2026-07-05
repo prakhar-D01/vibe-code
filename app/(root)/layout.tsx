@@ -21,7 +21,7 @@ export default function HomeLayout({
       <div
         className={cn(
           "absolute inset-0 z-0",
-          "[background-size:40px_40px]",
+          "bg-size-[40px_40px]",
           "bg-[linear-gradient(to_right,#d4d4d8_1px,transparent_1px),linear-gradient(to_bottom,#d4d4d8_1px,transparent_1px)]",
           "dark:bg-[linear-gradient(to_right,#3f3f46_1px,transparent_1px),linear-gradient(to_bottom,#3f3f46_1px,transparent_1px)]",
         )}

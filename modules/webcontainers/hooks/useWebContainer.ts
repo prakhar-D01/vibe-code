@@ -62,7 +62,6 @@ export const useWebContainer = ({
 
     return () => {
       mounted = false;
-      
     };
   }, []);
 
@@ -83,9 +82,9 @@ export const useWebContainer = ({
         await instance.fs.writeFile(path, content);
 
         const verify = await instance.fs.readFile(path);
-      } 
-      catch (err) {
-        const errorMessage = err instanceof Error ? err.message : "Failed to write file";
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : "Failed to write file";
         console.error(`Failed to write file at ${path}:`, err);
         throw new Error(`Failed to write file at ${path}: ${errorMessage}`);
       }

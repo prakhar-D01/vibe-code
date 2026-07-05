@@ -11,8 +11,7 @@ export const getUserById = async (id: string) => {
       },
     });
     return user;
-  } 
-  catch (error) {
+  } catch (error) {
     console.log(error);
     return null;
   }
@@ -26,8 +25,7 @@ export const getAccountByUserId = async (userId: string) => {
       },
     });
     return account;
-  } 
-  catch (error) {
+  } catch (error) {
     console.log(error);
     return null;
   }
@@ -36,4 +34,22 @@ export const getAccountByUserId = async (userId: string) => {
 export const currentUser = async () => {
   const user = await auth();
   return user?.user;
+};
+
+export const getAccountByUserIdAndProvider = async (
+  userId: string,
+  provider: string,
+) => {
+  try {
+    const account = await db.account.findFirst({
+      where: {
+        userId,
+        provider,
+      },
+    });
+    return account;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
