@@ -55,7 +55,6 @@ import React, {
 } from "react";
 import { toast } from "sonner";
 
-
 const MainPlaygroundPage = () => {
   const { id } = useParams<{ id: string }>();
   const [isPreviewVisible, setIsPreviewVisible] = useState(true);
@@ -64,8 +63,7 @@ const MainPlaygroundPage = () => {
   const { playgroundData, templateData, isLoading, error, saveTemplateData } =
     usePlayground(id);
 
-  const aiSuggestions=  useAISuggestions();
-
+  const aiSuggestions = useAISuggestions();
 
   const {
     setTemplateData,

@@ -8,7 +8,6 @@ import { Progress } from "@/components/ui/progress";
 import { WebContainer } from "@webcontainer/api";
 import { TemplateFolder } from "@/modules/playground/lib/path-to-json";
 
-
 interface WebContainerPreviewProps {
   templateData: TemplateFolder;
   serverUrl: string;

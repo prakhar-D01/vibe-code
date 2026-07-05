@@ -1,16 +1,26 @@
-import NextAuth from "next-auth";
+import NextAuth, { type Account, type Profile, type User } from "next-auth";
+import type { AdapterUser } from "next-auth/adapters";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
 import authConfig from "./auth.config";
 import { db } from "./lib/db";
 import { getAccountByUserId, getUserById } from "./modules/auth/actions";
 
+
 export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     /**
      * Handle user creation and account linking after a successful sign-in
      */
-    async signIn({ user, account, profile }) {
+    async signIn({
+      user,
+      account,
+      profile,
+    }: {
+      user: User | AdapterUser;
+      account?: Account | null;
+      profile?: Profile;
+    }) {
       if (!user || !account) return false;
 
       // Check if the user already exists
@@ -91,6 +101,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       token.name = existingUser.name;
       token.email = existingUser.email;
       token.role = existingUser.role;
+      token.image = existingUser.image;
 
       return token;
     },
